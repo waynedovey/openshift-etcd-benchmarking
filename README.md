@@ -1,5 +1,5 @@
 ---
-**Example command**
+__Example command__  
 
 source /etc/etcd/etcd.conf
 
