@@ -11,8 +11,11 @@ __Working Command__
 
 ```sh
 export MASTER0=https://$(nslookup master0| grep Address| tail -1 | awk '{print $2}'):2379
+
 export MASTER1=https://$(nslookup master1| grep Address| tail -1 | awk '{print $2}'):2379
+
 export MASTER2=https://$(nslookup master2| grep Address| tail -1 | awk '{print $2}'):2379
+
 source /etc/etcd/etcd.conf
 ```
 
