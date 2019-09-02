@@ -1,6 +1,5 @@
-# openshift-etcd-benchmarking
 ---
-**Example command
+**Example command**
 
 source /etc/etcd/etcd.conf
 
