@@ -7,7 +7,7 @@ __Example command__
 
 ---
 
-__Working Command__  
+__Environment Variables__  
 
 ```sh
 export MASTER0=https://$(nslookup master0| grep Address| tail -1 | awk '{print $2}'):2379
