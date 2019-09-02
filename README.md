@@ -39,6 +39,6 @@ benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=100
 
 | Number of keys | Key size in bytes | Value size in bytes | Number of connections | Number of clients | Target etcd server | Average write QPS | Average latency per request | Average server RSS |
 |---------------:|------------------:|--------------------:|----------------------:|------------------:|--------------------|------------------:|----------------------------:|-------------------:|
-| 10,000 | 8 | 256 | 1 | 1 | leader only | 161.4943 R/s | 0.0062s | 219MB |
-| 100,000 | 8 | 256 | 100 | 1000 | leader only | 5112.3423 R/s | 0.1942s |  387MB |
+| 10,000 | 8 | 256 | 1 | 1 | leader only | 161.4943 | 0.0062s | 219MB |
+| 100,000 | 8 | 256 | 100 | 1000 | leader only | 5112.3423 | 0.1942s |  387MB |
 | 100,000 | 8 | 256 | 100 | 1000 | all members |  5692.5523 | 0.1738s |  468MB |
