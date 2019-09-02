@@ -22,6 +22,7 @@ source /etc/etcd/etcd.conf
 # write to leader
 benchmark --endpoints=${MASTER0} --target-leader --conns=1 --clients=1 \
     put --key-size=8 --sequential-keys --total=10000 --val-size=256 --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+
 benchmark --endpoints=${MASTER0} --target-leader  --conns=100 --clients=1000 \
     put --key-size=8 --sequential-keys --total=100000 --val-size=256 --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
 
