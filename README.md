@@ -25,23 +25,62 @@ __Check RSS Memory usage__
 ansible -i openshift-inventory masters -m command -a "ps -C etcd -o rss="
 ```
 
+__All ETCD Write Tests__
+
 ```sh
-# write to leader 1 Connection
+# Write to leader 1 Connection
 benchmark --endpoints=${MASTER0} --target-leader --conns=1 --clients=1 \
-    put --key-size=8 --sequential-keys --total=10000 --val-size=256 --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+    put --key-size=8 --sequential-keys --total=10000 --val-size=256 \
+    --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
 
-# write to leader 100 Connections
+# Write to leader 100 Connections
 benchmark --endpoints=${MASTER0} --target-leader  --conns=100 --clients=1000 \
-    put --key-size=8 --sequential-keys --total=100000 --val-size=256 --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+    put --key-size=8 --sequential-keys --total=100000 --val-size=256 \
+    --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
 
-# write to all members 100 Connections
+# Write to all members 100 Connections
 benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=1000 \
-    put --key-size=8 --sequential-keys --total=100000 --val-size=256 --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+    put --key-size=8 --sequential-keys --total=100000 --val-size=256 \
+    --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
 ```
 
+__ETCD Write Results__
 
 | Number of keys | Key size in bytes | Value size in bytes | Number of connections | Number of clients | Target etcd server | Average write QPS | Average latency per request | Average server RSS |
 |---------------:|------------------:|--------------------:|----------------------:|------------------:|--------------------|------------------:|----------------------------:|-------------------:|
 | 10,000 | 8 | 256 | 1 | 1 | leader only | 161 | 0.0062s | 219MB |
 | 100,000 | 8 | 256 | 100 | 1000 | leader only | 5112| 0.1942s |  387MB |
 | 100,000 | 8 | 256 | 100 | 1000 | all members |  5692 | 0.1738s |  468MB |
+
+__All ETCD Write Tests__
+
+```sh
+# Single connection read requests Linearizable
+benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=1 --clients=1 \
+    range YOUR_KEY --consistency=l --total=10000 --cert=$ETCD_PEER_CERT_FILE \
+    --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+
+# Single connection read requests Serializable
+benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=1 --clients=1 \
+    range YOUR_KEY --consistency=s --total=10000 --cert=$ETCD_PEER_CERT_FILE \
+    --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+
+# Many concurrent read requests Linearizable
+benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=1000 \
+    range YOUR_KEY --consistency=l --total=100000 --cert=$ETCD_PEER_CERT_FILE \
+    --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+
+# Many concurrent read requests Serializable
+benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=1000 \
+    range YOUR_KEY --consistency=s --total=100000 --cert=$ETCD_PEER_CERT_FILE \
+    --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+```
+
+__ETCD Read Results__
+
+| Number of requests | Key size in bytes | Value size in bytes | Number of connections | Number of clients | Consistency | Average read QPS | Average latency per request |
+|-------------------:|------------------:|--------------------:|----------------------:|------------------:|-------------|-----------------:|----------------------------:|
+| 10,000 | 8 | 256 | 1 | 1 | Linearizable | 640 | 0.0016s |
+| 10,000 | 8 | 256 | 1 | 1 | Serializable | 1900 | 0.0005s |
+| 100,000 | 8 | 256 | 100 | 1000 | Linearizable | 14349 | 0.0663s |
+| 100,000 | 8 | 256 | 100 | 1000 | Serializable | 18394 | 0.0495s |
