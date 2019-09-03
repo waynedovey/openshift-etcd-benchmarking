@@ -110,4 +110,4 @@ __Random write performance__
 
 ```fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=./testfile --bs=4k --iodepth=64 --size=4G --readwrite=randwrite```
 
-(Target Average write min IOPS > avg=3000) (ideal >= avg=10000)
+(Target Average write min IOPS > avg=3000) (ideal >= avg=10000)"
