@@ -87,7 +87,7 @@ __ETCD Read Results__
 
 __Install flexible I/O tester Tool__
 
-``yum install fio  -y```
+```yum install fio  -y```
 
 ```cd /var/lib/etcd/member/wal```
 
