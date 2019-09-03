@@ -52,7 +52,7 @@ __ETCD Write Results__
 | 100,000 | 8 | 256 | 100 | 1000 | leader only | 5112| 0.1942s |  387MB |
 | 100,000 | 8 | 256 | 100 | 1000 | all members |  5692 | 0.1738s |  468MB |
 
-__All ETCD READ Tests__
+__All ETCD Read Tests__
 
 ```sh
 # Single connection read requests Linearizable
