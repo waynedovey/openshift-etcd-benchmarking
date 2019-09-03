@@ -98,6 +98,7 @@ __Random read/write performance__
 ```fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=./testfile --bs=4k --iodepth=64 --size=4G --readwrite=randrw --rwmixread=75```
 
 (Target Average read min IOPS > avg=2000) (ideal >= avg=6000)
+
 (Target Average write min IOPS > avg=500) (ideal >= avg=2000)
 
 __Random read performance__
