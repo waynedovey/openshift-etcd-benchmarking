@@ -84,3 +84,44 @@ __ETCD Read Results__
 | 10,000 | 8 | 256 | 1 | 1 | Serializable | 1900 | 0.0005s |
 | 100,000 | 8 | 256 | 100 | 1000 | Linearizable | 14349 | 0.0663s |
 | 100,000 | 8 | 256 | 100 | 1000 | Serializable | 18394 | 0.0495s |
+
+__DISK Tests__
+
+```fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=./testfile --bs=4k --iodepth=64 --size=4G --readwrite=randrw --rwmixread=75```
+
+(Target Average read min IOPS > avg=2000) (ideal >= avg=6000)
+(Target Average write min IOPS > avg=500) (ideal >= avg=2000)
+
+__Random read performance__
+
+```fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=./testfile --bs=4k --iodepth=64 --size=4G --readwrite=randread```
+
+(Target Average read min IOPS > avg=4000) (ideal >= avg=10000)
+
+__Random write performance__
+
+```fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=./testfile --bs=4k --iodepth=64 --size=4G --readwrite=randwrite```
+
+(Target Average write min IOPS > avg=3000) (ideal >= avg=10000)
+
+"openshiftvg Directory"
+
+__Random read/write performance__
+
+```fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=./testfile --bs=4k --iodepth=64 --size=4G --readwrite=randrw --rwmixread=75```
+
+(Target Average read min IOPS > avg=2000) (ideal >= avg=6000)
+(Target Average write min IOPS > avg=500) (ideal >= avg=2000)
+
+__Random read performance__
+
+```fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=./testfile --bs=4k --iodepth=64 --size=4G --readwrite=randread```
+
+(Target Average read min IOPS > avg=4000) (ideal >= avg=10000)
+
+__Random write performance__
+
+```fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=./testfile --bs=4k --iodepth=64 --size=4G --readwrite=randwrite```
+
+(Target Average write min IOPS > avg=3000) (ideal >= avg=10000)"
+
