@@ -85,7 +85,13 @@ __ETCD Read Results__
 | 100,000 | 8 | 256 | 100 | 1000 | Linearizable | 14349 | 0.0663s |
 | 100,000 | 8 | 256 | 100 | 1000 | Serializable | 18394 | 0.0495s |
 
-__DISK Tests__
+__Install flexible I/O tester Tool__
+
+``yum install fio  -y```
+
+```cd /var/lib/etcd/member/wal```
+
+__Disk Tests__
 
 ```fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --filename=./testfile --bs=4k --iodepth=64 --size=4G --readwrite=randrw --rwmixread=75```
 
