@@ -31,17 +31,17 @@ __All ETCD Write Tests__
 
 ```sh
 # Write to leader 1 Connection
-benchmark --endpoints=${MASTER0} --target-leader --conns=1 --clients=1 \
+./benchmark --endpoints=${MASTER0} --target-leader --conns=1 --clients=1 \
     put --key-size=8 --sequential-keys --total=10000 --val-size=256 \
     --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=$ETCD_PEER_CACERT_FILE
 
 # Write to leader 100 Connections
-benchmark --endpoints=${MASTER0} --target-leader  --conns=100 --clients=1000 \
+./benchmark --endpoints=${MASTER0} --target-leader  --conns=100 --clients=1000 \
     put --key-size=8 --sequential-keys --total=100000 --val-size=256 \
     --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=$ETCD_PEER_CACERT_FILE
 
 # Write to all members 100 Connections
-benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=1000 \
+./benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=1000 \
     put --key-size=8 --sequential-keys --total=100000 --val-size=256 \
     --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=$ETCD_PEER_CACERT_FILE
 ```
@@ -58,22 +58,22 @@ __All ETCD Read Tests__
 
 ```sh
 # Single connection read requests Linearizable
-benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=1 --clients=1 \
+./benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=1 --clients=1 \
     range YOUR_KEY --consistency=l --total=10000 --cert=$ETCD_PEER_CERT_FILE \
     --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
 
 # Single connection read requests Serializable
-benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=1 --clients=1 \
+./benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=1 --clients=1 \
     range YOUR_KEY --consistency=s --total=10000 --cert=$ETCD_PEER_CERT_FILE \
     --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
 
 # Many concurrent read requests Linearizable
-benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=1000 \
+./benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=1000 \
     range YOUR_KEY --consistency=l --total=100000 --cert=$ETCD_PEER_CERT_FILE \
     --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
 
 # Many concurrent read requests Serializable
-benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=1000 \
+./benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=1000 \
     range YOUR_KEY --consistency=s --total=100000 --cert=$ETCD_PEER_CERT_FILE \
     --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
 ```
