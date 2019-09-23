@@ -1,9 +1,11 @@
 ---
 __Example command__  
 
-```$ source /etc/etcd/etcd.conf```
+```$ source profile-etcd.conf```
 
-```$ benchmark --target-leader --conns=1 --clients=1 put --key-size=8 --sequential-keys --total=10000 --val-size=25 --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt --endpoints=$ETCD_LISTEN_CLIENT_URLS```
+```ETCD_PEER_CACERT_FILE=certs/blue-ca.crt```
+
+```$ benchmark --target-leader --conns=1 --clients=1 put --key-size=8 --sequential-keys --total=10000 --val-size=25 --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=$ETCD_PEER_CACERT_FILE --endpoints=$ETCD_LISTEN_CLIENT_URLS```
 
 ---
 
@@ -16,7 +18,7 @@ export MASTER1=https://$(nslookup master1| grep Address| tail -1 | awk '{print $
 
 export MASTER2=https://$(nslookup master2| grep Address| tail -1 | awk '{print $2}'):2379
 
-source /etc/etcd/etcd.conf
+source profile-etcd.conf
 ```
 
 __Check RSS Memory usage__
@@ -31,17 +33,17 @@ __All ETCD Write Tests__
 # Write to leader 1 Connection
 benchmark --endpoints=${MASTER0} --target-leader --conns=1 --clients=1 \
     put --key-size=8 --sequential-keys --total=10000 --val-size=256 \
-    --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+    --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=$ETCD_PEER_CACERT_FILE
 
 # Write to leader 100 Connections
 benchmark --endpoints=${MASTER0} --target-leader  --conns=100 --clients=1000 \
     put --key-size=8 --sequential-keys --total=100000 --val-size=256 \
-    --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+    --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=$ETCD_PEER_CACERT_FILE
 
 # Write to all members 100 Connections
 benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=1000 \
     put --key-size=8 --sequential-keys --total=100000 --val-size=256 \
-    --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+    --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE --cacert=$ETCD_PEER_CACERT_FILE
 ```
 
 __ETCD Write Results__
