@@ -60,22 +60,22 @@ __All ETCD Read Tests__
 # Single connection read requests Linearizable
 ./benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=1 --clients=1 \
     range YOUR_KEY --consistency=l --total=10000 --cert=$ETCD_PEER_CERT_FILE \
-    --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+    --key=$ETCD_PEER_KEY_FILE --cacert=$ETCD_PEER_CACERT_FILE
 
 # Single connection read requests Serializable
 ./benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=1 --clients=1 \
     range YOUR_KEY --consistency=s --total=10000 --cert=$ETCD_PEER_CERT_FILE \
-    --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+    --key=$ETCD_PEER_KEY_FILE --cacert=$ETCD_PEER_CACERT_FILE
 
 # Many concurrent read requests Linearizable
 ./benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=1000 \
     range YOUR_KEY --consistency=l --total=100000 --cert=$ETCD_PEER_CERT_FILE \
-    --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+    --key=$ETCD_PEER_KEY_FILE --cacert=$ETCD_PEER_CACERT_FILE
 
 # Many concurrent read requests Serializable
 ./benchmark --endpoints=${MASTER0},${MASTER1},${MASTER2} --conns=100 --clients=1000 \
     range YOUR_KEY --consistency=s --total=100000 --cert=$ETCD_PEER_CERT_FILE \
-    --key=$ETCD_PEER_KEY_FILE --cacert=/etc/etcd/ca.crt
+    --key=$ETCD_PEER_KEY_FILE --cacert=$ETCD_PEER_CACERT_FILE
 ```
 
 __ETCD Read Results__
